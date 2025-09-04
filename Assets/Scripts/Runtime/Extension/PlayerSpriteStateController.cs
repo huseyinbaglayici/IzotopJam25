@@ -3,7 +3,7 @@ using Runtime.Extension;
 
 namespace Runtime.Player
 {
-    public class PlayerSpriteStateController : MonoSingleton<PlayerSpriteStateController>
+    public class SpriteStatesController : MonoSingleton<SpriteStatesController>
     {
         private void Update()
         {
