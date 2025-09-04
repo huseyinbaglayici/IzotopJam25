@@ -1,21 +1,22 @@
-﻿using Managers;
-using Runtime.Extension;
+﻿using Runtime.Extension;
+using UnityEngine;
 
 namespace Runtime.Weapon
 {
     public class WeaponController : MonoSingleton<WeaponController>
     {
-        private void Update()
-        {   
-            if (InputManager.Instance.IsLeftClick())
-            {
-                Shoot();
-            }
-        }
+        public Transform firePoint;
+        public GameObject muzzleFlash;
+        public GameObject bulletPrefab;
 
-        private void Shoot()
+        [Header("Weapon Stats")] 
+        protected bool isFiring = false;
+        protected float lastFiredTime;
+
+
+        public void Shoot()
         {
-            
+            Debug.LogWarning("Shoot");
         }
     }
 }

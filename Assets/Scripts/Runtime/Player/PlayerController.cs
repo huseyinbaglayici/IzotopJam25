@@ -49,6 +49,10 @@ namespace Runtime.Player
             float angle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
             weaponPivot.rotation = Quaternion.Euler(0, 0, angle);
         }
-
+        
+        public float GetrbVelocity()
+        {
+            return rb.linearVelocity.magnitude;
+        }
     }
 }

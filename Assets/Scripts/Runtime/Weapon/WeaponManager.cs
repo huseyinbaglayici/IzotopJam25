@@ -1,21 +1,18 @@
-﻿using Runtime.Extension;
+﻿using Managers;
+using Runtime.Extension;
 
-namespace Managers
+namespace Runtime.Weapon
 {
     public class WeaponManager : MonoSingleton<WeaponManager>
     {
+        public WeaponController weaponController;
         
         private void Update()
         {
             if (InputManager.Instance.IsLeftClick())
             {
-                Shoot();
+                weaponController.Shoot();
             }
-        }
-
-        private void Shoot()
-        {
-            
         }
     }
 }

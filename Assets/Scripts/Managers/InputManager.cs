@@ -15,7 +15,7 @@ namespace Managers
 
         public bool IsLeftClick()
         {
-            return Input.GetMouseButton(0);
+            return Input.GetMouseButtonDown(0);
         }
 
         public Vector2 GetMousePosition()
