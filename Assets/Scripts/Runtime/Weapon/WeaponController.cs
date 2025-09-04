@@ -1,5 +1,6 @@
 ﻿using Runtime.Extension;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Weapon
 {
@@ -8,15 +9,21 @@ namespace Runtime.Weapon
         public Transform firePoint;
         public GameObject muzzleFlash;
         public GameObject bulletPrefab;
+        [FormerlySerializedAs("firaRate")] public float fireRate;
 
-        [Header("Weapon Stats")] 
-        protected bool isFiring = false;
+        [Header("Weapon Stats")] protected bool isFiring = false;
         protected float lastFiredTime;
 
 
-        public void Shoot()
+        public void Fire()
         {
+            if (Time.time < lastFiredTime + fireRate)
+                return;
+            lastFiredTime = Time.time;
             Debug.LogWarning("Shoot");
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            
+            // muzzle ile ilgili bir sey olacaksa burada efektler patlatilabilir ! 
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Runtime.Weapon
         {
             if (InputManager.Instance.IsLeftClick())
             {
-                weaponController.Shoot();
+                weaponController.Fire();
             }
         }
     }
