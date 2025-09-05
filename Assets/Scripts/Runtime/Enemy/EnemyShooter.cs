@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Runtime.Enemy
 {
@@ -8,15 +7,18 @@ namespace Runtime.Enemy
         public GameObject projectilePrefab;
         public Transform firePoint;
 
+        [SerializeField] private Transform spriteTransform;
+
+
         [Header("Attack Settings")] private float attackCooldown = 3f;
-        private float bulletSpeed = 4f;
+        [SerializeField] private float bulletSpeed = 11f;
         [SerializeField] private float lastAttackTime = Mathf.NegativeInfinity;
 
         private void Update()
         {
             if (bIsDead) return;
 
-            var distanceToPlayer = Vector2.Distance(player.transform.position, transform.position);
+            var distanceToPlayer = Vector2.Distance(player.position, transform.position);
 
             if (distanceToPlayer <= attackRange)
             {
@@ -32,29 +34,37 @@ namespace Runtime.Enemy
 
         private void LookAtPlayer()
         {
-            if (!player) return;
-
             Vector2 direction = (player.position - transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float currentAngle = spriteTransform.eulerAngles.z;
+            float smoothAngle = Mathf.LerpAngle(currentAngle, targetAngle, Time.deltaTime * 5f);
 
-            _rb.rotation = angle;
+            if (spriteTransform)
+            {
+                spriteTransform.rotation = Quaternion.Euler(0, 0, smoothAngle);
+            }
+
+            if (firePoint)
+            {
+                firePoint.rotation = spriteTransform.rotation;
+            }
         }
 
         public override void Attack()
         {
             // sprite trigger
+            ShootBullet();
         }
 
         private void ShootBullet()
         {
-            var bullet = Instantiate (projectilePrefab, firePoint.position, firePoint.rotation);
+            var bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                Vector2 direction = (player.position - transform.position).normalized;
+                Vector2 direction = firePoint.right;
                 rb.linearVelocity = direction * bulletSpeed;
             }
         }
-        
     }
 }

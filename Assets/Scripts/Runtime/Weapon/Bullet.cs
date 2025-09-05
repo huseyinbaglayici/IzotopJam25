@@ -4,11 +4,10 @@ namespace Runtime.Weapon
 {
     public class Bullet : MonoBehaviour
     {
-        public float bulletSpeed;
+        public float bulletSpeed = 10;
         private const string Enemy = "Enemy";
 
         [SerializeField] private Rigidbody2D rb;
-
 
         private void Start()
         {
@@ -22,7 +21,7 @@ namespace Runtime.Weapon
 
         private void HandleHit(Collision2D hit)
         {
-            if (!hit.transform.CompareTag(Enemy))
+            if (!hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Player"))
             {
                 Destroy(gameObject);
             }

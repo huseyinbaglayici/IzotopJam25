@@ -11,8 +11,8 @@ namespace Runtime.Player
 
         public void DecreaseHealth(int amount)
         {
-            Debug.LogWarning(health);
             health = Mathf.Max(health - amount, 0);
+            Debug.LogWarning(health);
             //UIManager
             if (health == 0)
             {
