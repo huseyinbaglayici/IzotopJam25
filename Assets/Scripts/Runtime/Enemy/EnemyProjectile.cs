@@ -1,5 +1,4 @@
-﻿using System;
-using Runtime.Player;
+﻿using Runtime.Player;
 using UnityEngine;
 
 namespace Runtime.Enemy

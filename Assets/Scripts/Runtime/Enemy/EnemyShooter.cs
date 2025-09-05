@@ -6,13 +6,23 @@ namespace Runtime.Enemy
     {
         public GameObject projectilePrefab;
         public Transform firePoint;
+        [SerializeField] private bool bCanFire = false;
+
 
         [SerializeField] private Transform spriteTransform;
 
 
-        [Header("Attack Settings")] private float attackCooldown = 3f;
+        [Header("Attack Settings")] 
+        [SerializeField] private float attackCooldown = 3f;
         [SerializeField] private float bulletSpeed = 11f;
         [SerializeField] private float lastAttackTime = Mathf.NegativeInfinity;
+        protected override void Start()
+        {
+            base.Start();
+            bCanFire = true;
+            lastAttackTime =  Time.time;
+            
+        }
 
         private void Update()
         {
@@ -20,7 +30,7 @@ namespace Runtime.Enemy
 
             var distanceToPlayer = Vector2.Distance(player.position, transform.position);
 
-            if (distanceToPlayer <= attackRange)
+            if (distanceToPlayer <= attackRange && bCanFire)
             {
                 LookAtPlayer();
 
@@ -58,12 +68,15 @@ namespace Runtime.Enemy
 
         private void ShootBullet()
         {
-            var bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            if (bCanFire)
             {
-                Vector2 direction = firePoint.right;
-                rb.linearVelocity = direction * bulletSpeed;
+                var bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    Vector2 direction = firePoint.right;
+                    rb.linearVelocity = direction * bulletSpeed;
+                }
             }
         }
     }
