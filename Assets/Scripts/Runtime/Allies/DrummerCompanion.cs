@@ -1,4 +1,5 @@
 ﻿using Managers;
+using Runtime.Managers;
 using UnityEngine;
 
 namespace Runtime.Allies
@@ -16,8 +17,9 @@ namespace Runtime.Allies
         {
             if (CanAbilityUsable() && InputManager.Instance.IsVKeyPressed())
             {
-             Debug.LogWarning("DrummerCompanion");   
-                
+                Debug.LogWarning("DrummerCompanion");
+
+                BulletTimeManager.Instance.StartBulletTime();
                 StartCooldown();
             }
         }

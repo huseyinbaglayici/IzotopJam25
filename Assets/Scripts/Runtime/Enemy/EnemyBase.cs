@@ -19,7 +19,7 @@ namespace Runtime.Enemy
         public SpriteStatesController spriteDirectionalController;
         protected const string stringPlayer =  "Player";
         protected Rigidbody2D _rb;
-        protected bool bIsDead = false;
+        public bool bIsDead = false;
         
         public abstract void Attack();
 

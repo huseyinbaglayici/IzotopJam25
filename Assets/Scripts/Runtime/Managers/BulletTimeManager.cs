@@ -41,7 +41,8 @@ namespace Runtime.Managers
 
         private void EndBulletTime()
         {
-            throw new NotImplementedException();
+            isBulletTime = false;
+            Debug.LogWarning("bullet time finished succesfuly");
         }
     }
 }
