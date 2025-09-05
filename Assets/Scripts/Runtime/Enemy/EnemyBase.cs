@@ -1,4 +1,5 @@
 ﻿using System;
+using Runtime.Extension;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,56 +15,43 @@ namespace Runtime.Enemy
 
     public abstract class EnemyBase : MonoBehaviour
     {
-        [Header("Stats")] public bool isDead = false;
-        public float moveSpeed = 3.5f;
-        public int attackRange = 10;
-        public int damage;
+        public float moveSpeed = 5f;
+        public float attackRange;   
+        public int damage = 1;
         public Transform player;
-        public EnemyState currentState = EnemyState.Idle;
+        //public EnemyState currentState = EnemyState.Idle;
+        public SpriteStatesController spriteDirectionalController;
+        protected const string stringPlayer =  "Player";
+        protected Rigidbody2D _rb;
+        protected bool bIsDead = false;
+
 
         public abstract void Attack();
 
+        private void Awake()
+        {
+            _rb = GetComponent<Rigidbody2D>();
+        }
+
         public virtual void TakeDamage()
         {
-            if (isDead) return;
-
+            Debug.LogWarning("Hit taken damage dealed");
             Die();
         }
 
-        private void Die()
+        protected void Die()
         {
-            isDead = true;
+            bIsDead = true;
+            //animation codes oyun bittikten sonra polish ses vs
+            _rb.linearVelocity = Vector2.zero; // öldüğünde dursun
+            Destroy(transform.gameObject,1.3f);
+  
         }
 
         protected virtual void Start()
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
-
-        protected virtual void Update()
-        {
-            if (isDead) return;
-
-            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
-            if (distanceToPlayer <= attackRange)
-            {
-                currentState = EnemyState.Attack;
-            }
-
-            else
-            {
-                currentState = EnemyState.Chase;
-            }
-        }
         
-        private void FixedUpdate()
-        {
-            if (currentState == EnemyState.Chase)
-            {
-                Vector2 dir = (player.position - transform.position).normalized;
-                // rb.MovePosition(rb.position + dir * chaseSpeed * Time.fixedDeltaTime);
-            }
-        }
     }
 }

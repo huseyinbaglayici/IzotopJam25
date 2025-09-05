@@ -20,7 +20,7 @@ namespace Runtime.Weapon
             if (Time.time < lastFiredTime + fireRate)
                 return;
             lastFiredTime = Time.time;
-            Debug.LogWarning("Shoot");
+            //Debug.LogWarning("Shoot");
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             
             // muzzle ile ilgili bir sey olacaksa burada efektler patlatilabilir ! 
