@@ -1,7 +1,5 @@
-﻿using System;
-using Runtime.Extension;
+﻿using Runtime.Extension;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Runtime.Enemy
 {
@@ -39,7 +37,7 @@ namespace Runtime.Enemy
             Die();
         }
 
-        protected void Die()
+        protected virtual void Die()
         {
             bIsDead = true;
             //animation codes oyun bittikten sonra polish ses vs
