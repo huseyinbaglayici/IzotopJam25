@@ -6,9 +6,16 @@ public class MapManager : MonoBehaviour
 {
     public Transform enemiesParent; // Map altındaki EnemyBase objeleri
     [SerializeField] private List<EnemyBase> enemies = new List<EnemyBase>();
+    public Transform spawnPoint;
 
     private void Start()
     {
+        if (enemiesParent == null)
+        {
+            Debug.LogWarning($"enemiesParent not assigned for {gameObject.name}");
+            return;
+        }
+
         enemies.AddRange(enemiesParent.GetComponentsInChildren<EnemyBase>());
     }
 

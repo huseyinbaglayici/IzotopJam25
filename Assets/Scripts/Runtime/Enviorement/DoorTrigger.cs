@@ -1,34 +1,37 @@
-﻿using System;
+﻿// DoorTrigger.cs
 using System.Collections;
 using Runtime.Managers;
-using Unity.Cinemachine;
+using Runtime.Player;
 using UnityEngine;
 
-namespace Runtime.Enviorement
+namespace Runtime.Environment
 {
     public class DoorTrigger : MonoBehaviour
     {
-        public AudioSource doorSound;
         public float cameraSwitchDelay = 1f;
         public MapManager currentMap;
+        public Transform nextMapSpawnPoint;
         public Animator doorAnimator;
 
-        private void OnTriggerEnter2D(Collider2D other) 
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player") && currentMap.AllEnemiesDead())
             {
-                //doorAnimator.SetTrigger("Open);
-                Debug.LogWarning("kapiya temas");
-                StartCoroutine(SwitchCameraAfterDelay());
+                StartCoroutine(CameraSwitchAndTeleport());
             }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private IEnumerator SwitchCameraAfterDelay()
+        private IEnumerator CameraSwitchAndTeleport()
         {
             yield return new WaitForSeconds(cameraSwitchDelay);
-            Debug.LogWarning("kamera degisti");
+
             CameraManager.Instance.SwitchToNextCamera();
+
+            if (nextMapSpawnPoint != null)
+            {
+                PlayerController.Instance.TeleportToSpawnPoint(nextMapSpawnPoint.position);
+            }
         }
     }
 }
