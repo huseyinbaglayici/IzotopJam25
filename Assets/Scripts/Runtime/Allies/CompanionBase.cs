@@ -62,7 +62,7 @@ namespace Runtime.Allies
             }
         }
         
-        private void UpdateCooldown()
+        protected void UpdateCooldown()
         {
             if (cooldownTimer > 0f)
             {
@@ -75,26 +75,25 @@ namespace Runtime.Allies
             }
         }
 
-        private void HandleAbility()
+         void HandleAbility()
         {
             if (CanAbilityUsable())
             {
                 UseAbility();
             }
         }
-
-        public bool CanAbilityUsable()
+         
+        /// <summary>
+        /// Ability kullandıktan sonra cooldown başlatmak için çağırılmalı.
+        /// </summary>
+        protected void StartCooldown()
         {
-            if (cooldownTimer > 0f)
-            {
-                cooldownTimer -= Time.deltaTime;
-                bAbilityUsable = false;
-            }
-            else if (cooldownTimer <= 0f)
-            {
-                bAbilityUsable = true;
-            }
+            cooldownTimer = abilityCooldown;
+            bAbilityUsable = false;
+        }
 
+        protected bool CanAbilityUsable()
+        {
             return bAbilityUsable;
         }
 

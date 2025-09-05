@@ -8,10 +8,14 @@ namespace Runtime.Enemy
         private float lastAttackTime = 0f;
         private float attackCooldown = 1f;
         [SerializeField] private bool bIsExploded;
+        [SerializeField] private float explosionRadius = 2f;
+        [SerializeField] private GameObject explosionEffectPrefab;
+        [SerializeField] private bool canMove = true;
 
 
-        public int bomberDamage;
-        public float bomberSpeed = 15f;
+
+        public int bomberDamage = 2;
+        public float bomberSpeed = 9f;
 
 
         protected override void Start()
@@ -28,6 +32,11 @@ namespace Runtime.Enemy
 
         protected override void Update()
         {
+            if (bIsExploded)
+            {
+                Explode();
+                return;
+            }
             base.Update();
             if (isKnockedBack) return;
 
@@ -44,6 +53,31 @@ namespace Runtime.Enemy
             }
         }
 
+        private void Explode()
+        {
+            if (explosionEffectPrefab != null)
+            {
+                Instantiate(explosionEffectPrefab,transform.position,Quaternion.identity);
+            }
+
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+            foreach (var hit in hitColliders)
+            {
+                if (hit.CompareTag("Player"))
+                {
+                    PlayerStatManager.Instance.DecreaseHealth(bomberDamage);
+                }
+            }
+            base.Die();
+        }
+            
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        }
+
+        
         private void RotateTowardsPlayer()
         {
             if (!player) return;
@@ -56,22 +90,24 @@ namespace Runtime.Enemy
 
         private void ChasePlayer()
         {
-            if (_rb && player)
-            {
-                Vector2 direction = (player.position - transform.position).normalized;
-                _rb.linearVelocity = direction * moveSpeed;
-            }
+            if (!_rb || player == null || !canMove) return;
+
+            Vector2 direction = (player.position - transform.position);
+    
+            float distanceX = direction.x;
+            float distanceY = direction.y;
+
+            float moveX = Mathf.Clamp(distanceX, -1f, 1f) * moveSpeed;
+            float moveY = Mathf.Clamp(distanceY, -1f, 1f) * moveSpeed;
+    
+            _rb.linearVelocity = new Vector2(moveX, moveY);
+
         }
 
         protected override void Die()
         {
             base.Die();
             bIsExploded = true;
-        }
-
-        private void StopMoving()
-        {
-            _rb.linearVelocity = Vector2.zero;
         }
 
         public override void Attack()

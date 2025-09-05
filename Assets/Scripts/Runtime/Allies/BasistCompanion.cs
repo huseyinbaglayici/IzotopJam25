@@ -1,40 +1,40 @@
-﻿    using Managers;
-    using UnityEngine;
-    using UnityEngine.Serialization;
+﻿        using Managers;
+        using UnityEngine;
+        using UnityEngine.Serialization;
 
-    namespace Runtime.Allies
-    {
-        public class BasistCompanion : CompanionBase
+        namespace Runtime.Allies
         {
-
-            public Transform FirePoint;
-            [FormerlySerializedAs("basistProjectile")] public GameObject basistProjectilePrefab;
-
-
-            protected override void Start()
+            public class BasistCompanion : CompanionBase
             {
-                base.Start();
-            }
 
-            protected override void UseAbility()
-            {
-                if (CanAbilityUsable() && InputManager.Instance.IsRKeyPressed())
+                public Transform FirePoint;
+                [FormerlySerializedAs("basistProjectile")] public GameObject basistProjectilePrefab;
+
+
+                protected override void Start()
                 {
-                    //audioMan
-                    if(FirePoint == null|| basistProjectilePrefab == null) return;
-                    
-                    var basProjectile = Instantiate(basistProjectilePrefab,FirePoint.position, FirePoint.rotation);
-                    
-                    BasistProjectile bassAttack = basProjectile.GetComponent<BasistProjectile>();
-                    if (bassAttack != null)
+                    base.Start();
+                }
+
+                protected override void UseAbility()
+                {
+                    if (CanAbilityUsable() && InputManager.Instance.IsRKeyPressed())
                     {
-                        //aud man
-                        // efekt
-                        // dotween belki
+                        //audioMan
+                        if(FirePoint == null|| basistProjectilePrefab == null) return;
+                        
+                        var basProjectile = Instantiate(basistProjectilePrefab,FirePoint.position, FirePoint.rotation);
+                        BasistProjectile bassAttack = basProjectile.GetComponent<BasistProjectile>();
+                        if (bassAttack != null)
+                        {
+                            //aud man
+                            // efekt
+                            // dotween belki
+                        }
+                        Debug.LogWarning("Basist vurdu");
+                        
+                        StartCooldown();
                     }
-                    Debug.LogWarning("Basist vurdu");
-                    
                 }
             }
         }
-    }
