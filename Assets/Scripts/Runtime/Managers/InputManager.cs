@@ -25,5 +25,15 @@ namespace Managers
             mousePosition.z = Mathf.Abs(mainCam.transform.position.z);
             return mainCam.ScreenToWorldPoint(mousePosition);
         }
+
+        public bool IsRKeyPressed()
+        {
+            return Input.GetKeyDown(KeyCode.R);
+        }
+        
+        public bool IsVKeyPressed()
+        {
+            return Input.GetKeyDown(KeyCode.V);
+        }
     }
 }

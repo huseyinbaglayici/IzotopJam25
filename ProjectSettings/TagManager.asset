@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Enemy
+  - FirePoint
   layers:
   - Default
   - TransparentFX

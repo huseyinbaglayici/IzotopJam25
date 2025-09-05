@@ -8,7 +8,7 @@ namespace Runtime.Enemy
         private float lastAttackTime = 0f;
         private float attackCooldown = 1f;
         [SerializeField] private bool bIsExploded;
-        
+
 
         public int bomberDamage;
         public float bomberSpeed = 15f;
@@ -20,26 +20,22 @@ namespace Runtime.Enemy
         }
 
         private void InitProperties()
-        {   
+        {
             player = GameObject.FindGameObjectWithTag("Player").transform;
             moveSpeed = bomberSpeed;
             damage = bomberDamage;
         }
 
-        protected void Update()
+        protected override void Update()
         {
+            base.Update();
+            if (isKnockedBack) return;
+
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if (distanceToPlayer <= attackRange)
+            if (distanceToPlayer <= attackRange && Time.time > lastAttackTime + attackCooldown)
             {
-                if (Time.time > lastAttackTime + attackCooldown)
-                {
-                    Attack();
-                }
-                else
-                {
-                    StopMoving();
-                }
+                Attack();
             }
             else
             {

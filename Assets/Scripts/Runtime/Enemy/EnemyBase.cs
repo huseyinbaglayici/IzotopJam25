@@ -3,16 +3,14 @@ using UnityEngine;
 
 namespace Runtime.Enemy
 {
-    public enum EnemyState
-    {
-        Idle,
-        Chase,
-        Attack,
-        Dead
-    }
 
     public abstract class EnemyBase : MonoBehaviour
     {
+        public bool isKnockedBack = false;
+        private float knockbackTimer = 0f;
+        private float knockbackDuration = 0.5f;
+
+        
         public float moveSpeed = 5f;
         public float attackRange;   
         public int damage = 1;
@@ -22,8 +20,7 @@ namespace Runtime.Enemy
         protected const string stringPlayer =  "Player";
         protected Rigidbody2D _rb;
         protected bool bIsDead = false;
-
-
+        
         public abstract void Attack();
 
         private void Awake()
@@ -31,10 +28,36 @@ namespace Runtime.Enemy
             _rb = GetComponent<Rigidbody2D>();
         }
 
+        protected virtual void Update()
+        {
+            if (isKnockedBack)
+            {
+                knockbackTimer -= Time.deltaTime;
+                if (knockbackTimer <= 0)
+                {
+                    isKnockedBack = false;
+                }
+                return;
+            }
+        }
+
         public virtual void TakeDamage()
         {
-            Debug.LogWarning("Hit taken damage dealed");
+            // Debug.LogWarning("Hit taken damage dealed");
             Die();
+        }
+        
+        public void TakeKnockback(Vector2 direction , float force)
+        {
+            isKnockedBack = true;
+            knockbackTimer = knockbackDuration;
+            
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(direction * force, ForceMode2D.Impulse);
+            }
         }
 
         protected virtual void Die()

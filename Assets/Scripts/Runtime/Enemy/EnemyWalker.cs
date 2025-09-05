@@ -8,31 +8,22 @@ namespace Runtime.Enemy
         private float attackCooldown = 2f;
         private float lastAttackTime = 0f;
 
-        protected void Update()
+        protected override void Update()
         {
+            base.Update();
+            if (isKnockedBack) return;
+
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if (distanceToPlayer <= attackRange)
+            if (distanceToPlayer <= attackRange && Time.time > lastAttackTime + attackCooldown)
             {
-                if (Time.time > lastAttackTime + attackCooldown)
-                {
-                    Attack();
-                }
-                else
-                {
-                    StopMoving();
-                }
+                Attack();
             }
             else
             {
                 ChasePlayer();
                 RotateTowardsPlayer();
             }
-        }
-
-        private void StopMoving()
-        { 
-            _rb.linearVelocity = Vector2.zero;
         }
 
         private void ChasePlayer()

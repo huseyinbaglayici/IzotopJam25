@@ -40,7 +40,7 @@ namespace Runtime.Player
             if (!bInputAvaible) return;
             float2 movementInput = InputManager.Instance.GetMovementInputs();
 
-            Debug.Log(movementInput);
+            //Debug.Log(movementInput);
             rb.linearVelocityX = movementInput.x * movementSpeed;
             rb.linearVelocityY = movementInput.y * movementSpeed;
 
@@ -55,11 +55,6 @@ namespace Runtime.Player
 
             float angle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
             weaponPivot.rotation = Quaternion.Euler(0, 0, angle);
-        }
-
-        public float GetrbVelocity()
-        {
-            return rb.linearVelocity.magnitude;
         }
     }
 }
