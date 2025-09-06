@@ -38,7 +38,7 @@ namespace Runtime.Player
         public void TeleportToSpawnPoint(Vector2 spawnPoint)
         {
             StopMovement();
-            transform.position = new Vector3(spawnPoint.x , spawnPoint.y, transform.position.z);
+            transform.position = new Vector3(spawnPoint.x, spawnPoint.y, transform.position.z);
             StopMovement();
             Debug.Log("Player teleported");
         }
@@ -53,12 +53,14 @@ namespace Runtime.Player
             if (!bInputAvaible) return;
             float2 movementInput = InputManager.Instance.GetMovementInputs();
 
-            //Debug.Log(movementInput);
+            float normalizedX = Mathf.Abs(movementInput.x) < 0.1f ? 0f : Mathf.Sign(movementInput.x);
+            float normalizedY = Mathf.Abs(movementInput.y) < 0.1f ? 0f : Mathf.Sign(movementInput.y);
+
             rb.linearVelocityX = movementInput.x * movementSpeed;
             rb.linearVelocityY = movementInput.y * movementSpeed;
 
-            animator.SetFloat("horizontal", movementInput.x);
-            animator.SetFloat("vertical", movementInput.y);
+            animator.SetFloat("horizontal", normalizedX);
+            animator.SetFloat("vertical", normalizedY);
         }
 
         public void Aim()
