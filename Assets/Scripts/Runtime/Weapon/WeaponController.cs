@@ -1,4 +1,5 @@
-﻿using Runtime.Extension;
+﻿using System;
+using Runtime.Extension;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,8 +21,11 @@ namespace Runtime.Weapon
             if (Time.time < lastFiredTime + fireRate)
                 return;
             lastFiredTime = Time.time;
+            var bullet = 
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            
+
+            bullet.layer = LayerMask.NameToLayer("Player");
+
             // muzzle ile ilgili bir sey olacaksa burada efektler patlatilabilir ! 
         }
     }
