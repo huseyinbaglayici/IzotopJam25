@@ -1,4 +1,6 @@
 ﻿// DoorTrigger.cs
+
+using System;
 using System.Collections;
 using Runtime.Managers;
 using Runtime.Player;
@@ -11,7 +13,6 @@ namespace Runtime.Environment
         public float cameraSwitchDelay = 1f;
         public MapManager currentMap;
         public Transform nextMapSpawnPoint;
-        public Animator doorAnimator;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
