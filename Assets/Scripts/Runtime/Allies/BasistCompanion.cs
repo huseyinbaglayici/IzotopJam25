@@ -1,4 +1,6 @@
-﻿        using Managers;
+﻿        using DG.Tweening;
+        using Managers;
+        using Runtime.Managers;
         using UnityEngine;
         using UnityEngine.Serialization;
 
@@ -32,7 +34,7 @@
                             // dotween belki
                         }
                         Debug.LogWarning("Basist vurdu");
-                        
+                        AudioManager.Instance.PlayMusic(AudioManager.Instance.bassGuiltarSkill);
                         StartCooldown();
                     }
                 }

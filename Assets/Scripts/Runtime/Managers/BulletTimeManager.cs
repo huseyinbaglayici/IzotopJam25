@@ -13,7 +13,7 @@ namespace Runtime.Managers
 
         private float normalTimeScale = 1f;
         private float timer;
-        private bool isBulletTime;
+        public bool isBulletTime;
 
 
         private void Update()

@@ -1,4 +1,6 @@
-﻿using Runtime.Extension;
+﻿using DG.Tweening;
+using Runtime.Extension;
+using Runtime.Managers;
 using UnityEngine;
 
 namespace Runtime.Enemy

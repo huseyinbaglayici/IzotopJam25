@@ -29,7 +29,7 @@ AnimationClip:
     - time: 0.25
       value: {fileID: 4286511455017261714, guid: 963645f35c2d2824b8589404637d4431, type: 3}
     attribute: m_Sprite
-    path: guitar_idle_front-1-Sheet-export-Sheet-export_0
+    path: SpriteSheet
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -41,7 +41,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 3858687069
+      path: 2913139896
       attribute: 0
       script: {fileID: 0}
       typeID: 212

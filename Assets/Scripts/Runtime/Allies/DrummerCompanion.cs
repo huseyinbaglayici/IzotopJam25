@@ -6,6 +6,7 @@ namespace Runtime.Allies
 {
     public class DrummerCompanion : CompanionBase
     {
+        [SerializeField] private AudioClip DrummerSound;
         public Transform FirePoint;
 
         protected override void Start()
@@ -20,6 +21,7 @@ namespace Runtime.Allies
                 Debug.LogWarning("DrummerCompanion");
 
                 BulletTimeManager.Instance.StartBulletTime();
+                AudioManager.Instance.PlayMusic(AudioManager.Instance.bassGuiltarSkill);
                 StartCooldown();
             }
         }

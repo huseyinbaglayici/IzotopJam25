@@ -1,6 +1,7 @@
 ﻿using System;
 using Managers;
 using Runtime.Extension;
+using Runtime.Managers;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,6 +11,8 @@ namespace Runtime.Player
     public class PlayerController : MonoSingleton<PlayerController>
     {
         [Header("Movement Datas")] public int movementSpeed = 10;
+        private int bulletTimeSpeed = 20;
+        private const int movementBaseSpeed = 10;
 
         [FormerlySerializedAs("weponPivot")] [SerializeField]
         public Transform weaponPivot;
@@ -18,6 +21,7 @@ namespace Runtime.Player
         [SerializeField] private Rigidbody2D rb;
 
         [SerializeField] private Animator animator;
+        [SerializeField] private AudioClip walkingSound;
 
 
         private void Start()
@@ -31,6 +35,15 @@ namespace Runtime.Player
 
         private void FixedUpdate()
         {
+            if (BulletTimeManager.Instance.isBulletTime)
+            {
+                movementSpeed = bulletTimeSpeed;
+            }
+            else
+            {
+                movementSpeed = movementBaseSpeed;
+            }
+
             Move();
             Aim();
         }
