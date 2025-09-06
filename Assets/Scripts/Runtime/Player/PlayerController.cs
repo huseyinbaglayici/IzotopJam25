@@ -37,9 +37,15 @@ namespace Runtime.Player
 
         public void TeleportToSpawnPoint(Vector2 spawnPoint)
         {
+            StopMovement();
             transform.position = new Vector3(spawnPoint.x , spawnPoint.y, transform.position.z);
-            rb.linearVelocity = Vector2.zero;
+            StopMovement();
             Debug.Log("Player teleported");
+        }
+
+        public void StopMovement()
+        {
+            rb.linearVelocity = Vector2.zero;
         }
 
         public void Move()
